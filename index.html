@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>for cutu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&family=Gochi+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#FF7FB8;
+  --pink-deep:#FF5BA0;
+  --pink-soft:#FFE0EF;
+  --blue:#6FC6E8;
+  --blue-deep:#4AB3DC;
+  --blue-soft:#DCF1FB;
+  --cream:#FFFBF8;
+  --card:#FFFFFF;
+  --ink:#5A4757;
+  --text-dim:#A893A0;
+  --gold:#FFC95C;
+  --line:#FBE3EF;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{min-height:100%; margin:0;
+  background:linear-gradient(165deg, var(--pink-soft) 0%, var(--blue-soft) 55%, var(--pink-soft) 100%);
+  font-family:'Quicksand', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased;}
+button{font-family:inherit;}
+img,svg{-webkit-user-drag:none; user-select:none;}
+h1,h2{font-family:'Baloo 2', sans-serif; margin:0;}
+
+.wrap{position:relative; max-width:460px; margin:0 auto; min-height:100vh; padding-bottom:60px;}
+
+.bg-blob{position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.6;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255,127,184,.22), transparent 38%),
+    radial-gradient(circle at 88% 18%, rgba(111,198,232,.22), transparent 38%),
+    radial-gradient(circle at 25% 90%, rgba(255,201,92,.16), transparent 42%);
+}
+
+/* ---------- grand opening ---------- */
+#openScreen{position:fixed; inset:0; z-index:200; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:18px; background:linear-gradient(165deg, var(--pink-soft), var(--blue-soft));
+  transition:opacity .6s ease, visibility .6s; cursor:pointer;}
+#openScreen.hide{opacity:0; visibility:hidden; pointer-events:none;}
+
+.open-title{font-size:15px; letter-spacing:.5px; color:var(--ink); opacity:.75; text-align:center; max-width:240px;}
+
+.giftbox{position:relative; width:180px; height:150px;}
+.gb-base{position:absolute; bottom:0; width:100%; height:96px; background:linear-gradient(160deg, var(--pink), var(--pink-deep));
+  border-radius:14px; box-shadow:0 18px 36px -10px rgba(255,91,160,.45);}
+.gb-lid{position:absolute; top:30px; left:-8px; right:-8px; height:34px; background:linear-gradient(160deg, var(--blue), var(--blue-deep));
+  border-radius:12px; box-shadow:0 6px 14px rgba(0,0,0,.12); transition:transform .7s cubic-bezier(.4,0,.2,1); transform-origin:10% center; z-index:3;}
+.giftbox.open .gb-lid{transform:translateY(-120px) rotate(-35deg);}
+.gb-ribbon-v{position:absolute; left:50%; top:0; transform:translateX(-50%); width:18px; height:100%; background:var(--gold); z-index:2;}
+.gb-ribbon-h{position:absolute; top:30px; left:0; right:0; height:18px; background:var(--gold); z-index:2;}
+.gb-bow{position:absolute; top:2px; left:50%; transform:translateX(-50%); font-size:30px; z-index:4; transition:opacity .4s, transform .4s;}
+.giftbox.open .gb-bow{opacity:0; transform:translateX(-50%) translateY(-26px) rotate(-15deg);}
+
+.teddy-peek{position:absolute; left:50%; top:46px; transform:translate(-50%,0) scale(.5); width:90px; opacity:0;
+  transition:transform .7s cubic-bezier(.34,1.56,.64,1) .15s, opacity .4s .15s; z-index:1;}
+.giftbox.open .teddy-peek{transform:translate(-50%,-78px) scale(1); opacity:1;}
+
+.open-hint{font-size:14px; color:var(--text-dim); transition:opacity .3s;}
+.open-hint.hide{opacity:0;}
+.greet-pop{font-family:'Gochi Hand', cursive; font-size:26px; color:var(--pink-deep); opacity:0; transform:translateY(8px);
+  transition:opacity .5s, transform .5s;}
+.greet-pop.show{opacity:1; transform:translateY(0);}
+
+/* ---------- hub ---------- */
+.screen{display:none; padding:24px 20px 10px; position:relative; z-index:1;}
+.screen.active{display:block;}
+
+.hub-top{text-align:center; margin-bottom:6px;}
+.hub-eyebrow{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--pink-deep); font-weight:700;}
+.hub-title{font-size:24px; font-weight:800; margin:4px 0 6px;}
+.hub-sub{font-size:14px; color:var(--text-dim); max-width:300px; margin:0 auto 18px;}
+
+.mascot-wrap{display:flex; justify-content:center; margin-bottom:6px;}
+.mascot-wrap svg{width:140px; animation:bobbing 3.4s ease-in-out infinite;}
+@keyframes bobbing{0%,100%{transform:translateY(0) rotate(-1deg);} 50%{transform:translateY(-8px) rotate(1deg);}}
+
+.game-cards{display:flex; flex-direction:column; gap:14px; margin-top:18px;}
+.gcard{display:flex; align-items:center; gap:14px; background:var(--card); border-radius:20px; padding:16px;
+  box-shadow:0 12px 26px -10px rgba(255,127,184,.28); border:1px solid var(--line); cursor:pointer;
+  transition:transform .15s ease;}
+.gcard:active{transform:scale(.97);}
+.gcard-icon{width:54px; height:54px; border-radius:16px; flex:none; display:flex; align-items:center; justify-content:center;}
+.gcard-icon svg{width:28px; height:28px;}
+.gcard-text{flex:1;}
+.gcard-text b{font-family:'Baloo 2', sans-serif; font-size:15.5px; display:block; margin-bottom:2px;}
+.gcard-text span{font-size:12px; color:var(--text-dim);}
+.gcard-arrow{font-size:18px; color:var(--pink-deep); flex:none;}
+.gcard.c1 .gcard-icon{background:linear-gradient(150deg, var(--pink-soft), #FFC7E1);}
+.gcard.c2 .gcard-icon{background:linear-gradient(150deg, var(--blue-soft), #BFE7F7);}
+.gcard.c3 .gcard-icon{background:linear-gradient(150deg, #FFF1D0, #FFE2A3);}
+
+.back-row{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.back-btn{background:var(--card); border:1px solid var(--line); width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--pink-deep); font-size:16px;
+  box-shadow:0 4px 10px rgba(0,0,0,.06);}
+.back-row h2{font-size:18px;}
+
+/* ---------- game 1: catch the hearts ---------- */
+.stat-row{display:flex; justify-content:center; gap:20px; font-size:12px; color:var(--text-dim); margin-bottom:14px;}
+.stat-row b{color:var(--ink); font-size:15px; display:block;}
+
+.catch-area{position:relative; height:56vh; min-height:360px; max-height:480px; border-radius:24px; overflow:hidden;
+  background:linear-gradient(180deg, #FFF6FA, var(--blue-soft)); border:1px solid var(--line);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);}
+.catch-start{position:absolute; inset:0; z-index:10; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:12px; text-align:center; padding:0 30px; background:rgba(255,255,255,.55);}
+.catch-start.hide{display:none;}
+.catch-start p{font-size:13px; color:var(--text-dim); max-width:220px; margin:0;}
+.falling-heart{position:absolute; top:-10%; cursor:pointer; animation:fallDown linear forwards; user-select:none;}
+@keyframes fallDown{from{top:-10%;} to{top:108%;}}
+.falling-heart svg{display:block; filter:drop-shadow(0 4px 8px rgba(0,0,0,.12));}
+.falling-heart.pop{animation:none; transform:scale(1.5); opacity:0; transition:transform .25s ease, opacity .25s ease;}
+
+.cute-btn{font-family:'Baloo 2', sans-serif; font-weight:700; font-size:14px; background:linear-gradient(135deg, var(--pink), var(--pink-deep));
+  color:#fff; border:none; padding:11px 26px; border-radius:24px; cursor:pointer; box-shadow:0 10px 20px -6px rgba(255,91,160,.5);}
+.cute-btn.alt{background:linear-gradient(135deg, var(--blue), var(--blue-deep)); box-shadow:0 10px 20px -6px rgba(74,179,220,.5);}
+
+.win-card{position:fixed; inset:0; z-index:95; background:rgba(255,247,251,.92); backdrop-filter:blur(4px); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:14px; text-align:center; padding:30px; opacity:0; pointer-events:none; transition:opacity .4s;}
+.win-card.show{opacity:1; pointer-events:auto;}
+.win-title{font-family:'Gochi Hand', cursive; font-size:30px; color:var(--pink-deep);}
+.win-sub{font-size:14px; color:var(--text-dim); max-width:260px;}
+
+.gconfetti{position:fixed; top:-20px; width:8px; height:14px; opacity:.95; pointer-events:none; z-index:96;}
+@keyframes gfall{0%{transform:translateY(-20px) rotate(0deg); opacity:1;} 100%{transform:translateY(110vh) rotate(540deg); opacity:.9;}}
+
+/* ---------- game 2: teddy memory ---------- */
+.memgrid{display:grid; grid-template-columns:repeat(4, 1fr); gap:9px;}
+.mcard{position:relative; aspect-ratio:3/4; border-radius:14px; cursor:pointer; perspective:600px;
+  transition:transform .15s ease; animation:dealcard .45s backwards;}
+.mcard:active{transform:scale(.95);}
+@keyframes dealcard{from{opacity:0; transform:translateY(16px) scale(.88);} to{opacity:1; transform:translateY(0) scale(1);}}
+.mcard-inner{position:absolute; inset:0; transition:transform .45s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d;}
+.mcard.flipped .mcard-inner{transform:rotateY(180deg);}
+.mcard.matched .mcard-inner{transform:rotateY(180deg);}
+.mcard.mismatch .mcard-inner{animation:cardshake .4s ease;}
+@keyframes cardshake{0%,100%{transform:rotateY(0deg) translateX(0);} 20%{transform:rotateY(0deg) translateX(-5px);}
+  40%{transform:rotateY(0deg) translateX(5px);} 60%{transform:rotateY(0deg) translateX(-3px);} 80%{transform:rotateY(0deg) translateX(3px);}}
+.mcard-face{position:absolute; inset:0; border-radius:14px; backface-visibility:hidden; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+.mcard-back{background:linear-gradient(150deg, #FFEAF4, #FFF); border:1px solid var(--line);}
+.mcard-back svg{width:22px; height:22px; opacity:.55; animation:beatpulse 2.2s ease-in-out infinite;}
+@keyframes beatpulse{0%,100%{transform:scale(1); opacity:.45;} 50%{transform:scale(1.18); opacity:.8;}}
+.mcard-front{transform:rotateY(180deg); background:#fff; display:flex; align-items:center; justify-content:center;}
+.mcard-front svg{width:60%; height:60%;}
+.mcard.matched .mcard-front{animation:matchglow .5s ease forwards;}
+@keyframes matchglow{0%{box-shadow:0 0 0 0 rgba(255,127,184,.7);} 100%{box-shadow:inset 0 0 0 2px var(--pink), 0 0 16px rgba(255,127,184,.4);}}
+
+/* ---------- game 3: dress the teddy ---------- */
+.teddy-stage{position:relative; width:220px; height:240px; margin:6px auto 18px;}
+.teddy-stage svg{position:absolute; inset:0; width:100%; height:100%;}
+.acc-layer{opacity:0; transition:opacity .25s ease, transform .25s ease; transform:scale(.9);}
+.acc-layer.on{opacity:1; transform:scale(1);}
+
+.acc-row{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;}
+.acc-btn{width:50px; height:50px; border-radius:16px; background:var(--card); border:2px solid var(--line);
+  display:flex; align-items:center; justify-content:center; font-size:22px; cursor:pointer; transition:transform .15s, border-color .2s;}
+.acc-btn.active{border-color:var(--pink); background:var(--pink-soft);}
+.acc-btn:active{transform:scale(.9);}
+.dress-hint{text-align:center; font-size:12.5px; color:var(--text-dim); margin-bottom:6px;}
+.shuffle-row{display:flex; justify-content:center; margin-top:14px;}
+
+@media (max-width:380px){
+  .hub-title{font-size:21px;} .mascot-wrap svg{width:115px;}
+  .teddy-stage{width:190px; height:210px;}
+}
+</style>
+</head>
+<body>
+<div class="bg-blob"></div>
+<div class="wrap" id="wrap">
+
+  <!-- ===================== HUB ===================== -->
+  <div class="screen active" id="screen-hub">
+    <div class="hub-top">
+      <p class="hub-eyebrow">hii cutu</p>
+      <h1 class="hub-title">a little arcade for you</h1>
+      <p class="hub-sub">three tiny games, zero pressure, all just an excuse to make you smile while you're away</p>
+    </div>
+
+    <div class="mascot-wrap">
+      <svg viewBox="0 0 200 240">
+        <ellipse cx="70" cy="225" rx="22" ry="16" fill="#C98A57"/>
+        <ellipse cx="130" cy="225" rx="22" ry="16" fill="#C98A57"/>
+        <ellipse cx="40" cy="178" rx="19" ry="33" fill="#D9A06B" transform="rotate(-12 40 178)"/>
+        <ellipse cx="160" cy="178" rx="19" ry="33" fill="#D9A06B" transform="rotate(12 160 178)"/>
+        <ellipse cx="100" cy="188" rx="62" ry="54" fill="#D9A06B"/>
+        <ellipse cx="100" cy="196" rx="32" ry="36" fill="#F3D9B8"/>
+        <circle cx="60" cy="40" r="20" fill="#D9A06B"/>
+        <circle cx="140" cy="40" r="20" fill="#D9A06B"/>
+        <circle cx="60" cy="40" r="10" fill="#8B5A33"/>
+        <circle cx="140" cy="40" r="10" fill="#8B5A33"/>
+        <circle cx="100" cy="85" r="50" fill="#D9A06B"/>
+        <ellipse cx="100" cy="100" rx="22" ry="17" fill="#F3D9B8"/>
+        <circle cx="84" cy="78" r="5" fill="#5A4757"/>
+        <circle cx="116" cy="78" r="5" fill="#5A4757"/>
+        <ellipse cx="100" cy="95" rx="7" ry="5" fill="#5A4757"/>
+        <path d="M100 99 Q100 107 90 109" stroke="#5A4757" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M100 99 Q100 107 110 109" stroke="#5A4757" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="game-cards">
+      <div class="gcard c1" data-game="catch">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.8C12 5.2 13.5 4 15.5 4 19.5 4 21 8 19.5 12 17 16.5 12 21 12 21z" fill="#FF5BA0"/></svg></div>
+        <div class="gcard-text"><b>catch the hearts</b><span>30 seconds, tap fast, gold ones count extra</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c2" data-game="memory">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#4AB3DC" stroke-width="1.8"/><circle cx="9" cy="12" r="2" fill="#4AB3DC"/><circle cx="15" cy="12" r="2" fill="#4AB3DC"/></svg></div>
+        <div class="gcard-text"><b>teddy's memory</b><span>find the matching pairs, six to go</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c3" data-game="dress">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="#FFC95C"/><circle cx="15" cy="8" r="3" fill="#FFC95C"/><circle cx="12" cy="14" r="7" fill="#FFC95C"/></svg></div>
+        <div class="gcard-text"><b>dress the teddy</b><span>hats, bows, and questionable fashion choices</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== GAME: CATCH ===================== -->
+  <div class="screen" id="screen-catch">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>catch the hearts</h2></div>
+    <div class="stat-row">
+      <div>score <b id="scoreCount">0</b></div>
+      <div>time <b id="timeLeft">30</b>s</div>
+      <div>best <b id="bestScore">0</b></div>
+    </div>
+    <div class="catch-area" id="catchArea">
+      <div class="catch-start" id="catchStart">
+        <p style="font-family:'Gochi Hand', cursive; font-size:22px; color:var(--pink-deep); margin:0;">ready?</p>
+        <p>30 seconds, tap every heart before it falls, gold ones count extra</p>
+        <button class="cute-btn" id="startCatchBtn">start</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== GAME: MEMORY ===================== -->
+  <div class="screen" id="screen-memory">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>teddy's memory</h2></div>
+    <div class="stat-row">
+      <div>moves <b id="movesCount">0</b></div>
+      <div>matched <b id="matchedCount">0</b>/6</div>
+      <div>time <b id="memTime">0:00</b></div>
+    </div>
+    <div class="memgrid" id="memGrid"></div>
+  </div>
+
+  <!-- ===================== GAME: DRESS ===================== -->
+  <div class="screen" id="screen-dress">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>dress the teddy</h2></div>
+    <p class="dress-hint">tap to add, tap again to remove, mix and match all you want</p>
+    <div class="teddy-stage">
+      <svg viewBox="0 0 200 240">
+        <ellipse cx="70" cy="225" rx="22" ry="16" fill="#C98A57"/>
+        <ellipse cx="130" cy="225" rx="22" ry="16" fill="#C98A57"/>
+        <ellipse cx="40" cy="178" rx="19" ry="33" fill="#D9A06B" transform="rotate(-12 40 178)"/>
+        <ellipse cx="160" cy="178" rx="19" ry="33" fill="#D9A06B" transform="rotate(12 160 178)"/>
+        <ellipse cx="100" cy="188" rx="62" ry="54" fill="#D9A06B"/>
+        <ellipse cx="100" cy="196" rx="32" ry="36" fill="#F3D9B8"/>
+        <circle cx="60" cy="40" r="20" fill="#D9A06B"/>
+        <circle cx="140" cy="40" r="20" fill="#D9A06B"/>
+        <circle cx="60" cy="40" r="10" fill="#8B5A33"/>
+        <circle cx="140" cy="40" r="10" fill="#8B5A33"/>
+        <circle cx="100" cy="85" r="50" fill="#D9A06B"/>
+        <ellipse cx="100" cy="100" rx="22" ry="17" fill="#F3D9B8"/>
+        <circle cx="84" cy="78" r="5" fill="#5A4757"/>
+        <circle cx="116" cy="78" r="5" fill="#5A4757"/>
+        <ellipse cx="100" cy="95" rx="7" ry="5" fill="#5A4757"/>
+        <path d="M100 99 Q100 107 90 109" stroke="#5A4757" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M100 99 Q100 107 110 109" stroke="#5A4757" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <svg class="acc-layer" id="acc-bow" viewBox="0 0 200 240">
+        <path d="M85 122 L100 132 L85 142 Z" fill="#FF5BA0"/>
+        <path d="M115 122 L100 132 L115 142 Z" fill="#FF5BA0"/>
+        <circle cx="100" cy="132" r="6" fill="#FF2E86"/>
+      </svg>
+      <svg class="acc-layer" id="acc-hat" viewBox="0 0 200 240">
+        <path d="M100 0 L82 32 L118 32 Z" fill="#6FC6E8"/>
+        <circle cx="100" cy="0" r="8" fill="#FFC95C"/>
+        <rect x="80" y="30" width="40" height="6" rx="3" fill="#4AB3DC"/>
+      </svg>
+      <svg class="acc-layer" id="acc-shades" viewBox="0 0 200 240">
+        <rect x="70" y="70" width="24" height="16" rx="6" fill="#5A4757"/>
+        <rect x="106" y="70" width="24" height="16" rx="6" fill="#5A4757"/>
+        <rect x="94" y="76" width="12" height="4" fill="#5A4757"/>
+      </svg>
+      <svg class="acc-layer" id="acc-crown" viewBox="0 0 200 240">
+        <circle cx="68" cy="22" r="7" fill="#FFD1E8"/>
+        <circle cx="100" cy="14" r="8" fill="#FFD1E8"/>
+        <circle cx="132" cy="22" r="7" fill="#FFD1E8"/>
+        <circle cx="68" cy="22" r="3" fill="#FFC95C"/>
+        <circle cx="100" cy="14" r="3" fill="#FFC95C"/>
+        <circle cx="132" cy="22" r="3" fill="#FFC95C"/>
+      </svg>
+      <svg class="acc-layer" id="acc-scarf" viewBox="0 0 200 240">
+        <rect x="66" y="112" width="68" height="16" rx="8" fill="#FF8FC4"/>
+        <rect x="92" y="124" width="14" height="30" rx="5" fill="#FF8FC4"/>
+      </svg>
+    </div>
+    <div class="acc-row">
+      <button class="acc-btn" data-acc="bow">🎀</button>
+      <button class="acc-btn" data-acc="hat">🎉</button>
+      <button class="acc-btn" data-acc="shades">🕶️</button>
+      <button class="acc-btn" data-acc="crown">🌸</button>
+      <button class="acc-btn" data-acc="scarf">🧣</button>
+    </div>
+    <div class="shuffle-row"><button class="cute-btn alt" id="randomDressBtn">surprise me</button></div>
+  </div>
+
+</div>
+
+<div class="win-card" id="winCard">
+  <p class="win-title" id="winTitle">time's up</p>
+  <p class="win-sub" id="winSub">nice run</p>
+  <button class="cute-btn" id="winReplayBtn">play again</button>
+</div>
+
+<!-- ===================== GRAND OPENING ===================== -->
+<div id="openScreen">
+  <p class="open-title">a little arcade i made you, tap the box</p>
+  <div class="giftbox" id="giftbox">
+    <div class="gb-base"></div>
+    <div class="gb-ribbon-v"></div>
+    <div class="gb-ribbon-h"></div>
+    <div class="gb-lid"></div>
+    <div class="gb-bow">🎀</div>
+    <svg class="teddy-peek" viewBox="0 0 100 100">
+      <circle cx="28" cy="22" r="14" fill="#D9A06B"/>
+      <circle cx="72" cy="22" r="14" fill="#D9A06B"/>
+      <circle cx="28" cy="22" r="7" fill="#8B5A33"/>
+      <circle cx="72" cy="22" r="7" fill="#8B5A33"/>
+      <circle cx="50" cy="50" r="38" fill="#D9A06B"/>
+      <ellipse cx="50" cy="60" rx="16" ry="13" fill="#F3D9B8"/>
+      <circle cx="38" cy="44" r="4" fill="#5A4757"/>
+      <circle cx="62" cy="44" r="4" fill="#5A4757"/>
+      <ellipse cx="50" cy="58" rx="5" ry="4" fill="#5A4757"/>
+      <path d="M50 62 Q50 68 44 69" stroke="#5A4757" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M50 62 Q50 68 56 69" stroke="#5A4757" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <p class="open-hint" id="openHint">tap the box</p>
+  <p class="greet-pop" id="greetPop">hii cutu! 🎀</p>
+</div>
+
+<script>
+/* ---------- grand opening ---------- */
+const giftbox = document.getElementById('giftbox');
+const openScreen = document.getElementById('openScreen');
+const openHint = document.getElementById('openHint');
+const greetPop = document.getElementById('greetPop');
+let openedBox = false;
+
+function confettiBurst(){
+  const colors = ['#FF7FB8','#6FC6E8','#FFC95C','#FFD1E8','#BFE7F7'];
+  for(let i=0;i<70;i++){
+    const c = document.createElement('div');
+    c.className = 'gconfetti';
+    c.style.left = Math.random()*100 + '%';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.borderRadius = Math.random()>.5 ? '50%' : '2px';
+    c.style.animation = `gfall ${2.1+Math.random()*1.6}s ease-in forwards`;
+    c.style.animationDelay = (Math.random()*0.4)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=> c.remove(), 4000);
+  }
+}
+
+giftbox.addEventListener('click', ()=>{
+  if(openedBox) return; openedBox = true;
+  giftbox.classList.add('open');
+  openHint.classList.add('hide');
+  confettiBurst();
+  setTimeout(()=> greetPop.classList.add('show'), 650);
+  setTimeout(()=>{ openScreen.classList.add('hide'); }, 2200);
+});
+
+/* ---------- screen nav ---------- */
+const screens = {
+  hub: document.getElementById('screen-hub'),
+  catch: document.getElementById('screen-catch'),
+  memory: document.getElementById('screen-memory'),
+  dress: document.getElementById('screen-dress'),
+};
+function goScreen(name){
+  Object.values(screens).forEach(s=> s.classList.remove('active'));
+  screens[name].classList.add('active');
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.gcard').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    goScreen(c.dataset.game);
+    if(c.dataset.game === 'memory') buildMemory();
+  });
+});
+document.querySelectorAll('[data-back]').forEach(b=>{
+  b.addEventListener('click', ()=> goScreen('hub'));
+});
+
+/* ---------- game 1: catch the hearts ---------- */
+const catchArea = document.getElementById('catchArea');
+const catchStart = document.getElementById('catchStart');
+const startCatchBtn = document.getElementById('startCatchBtn');
+const scoreCount = document.getElementById('scoreCount');
+const timeLeftEl = document.getElementById('timeLeft');
+const bestScoreEl = document.getElementById('bestScore');
+const winCard = document.getElementById('winCard');
+const winTitle = document.getElementById('winTitle');
+const winSub = document.getElementById('winSub');
+const winReplayBtn = document.getElementById('winReplayBtn');
+
+let score = 0, timeLeft = 30, bestScore = 0, catchRunning = false, spawnTimer = null, countdownTimer = null;
+const HEART_PATH = "M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.8C12 5.2 13.5 4 15.5 4 19.5 4 21 8 19.5 12 17 16.5 12 21 12 21z";
+
+function spawnHeart(){
+  if(!catchRunning) return;
+  const isGold = Math.random() < 0.12;
+  const size = 26 + Math.random()*16;
+  const left = 6 + Math.random()*84;
+  const duration = 2.6 + Math.random()*2.0;
+  const color = isGold ? '#FFC95C' : ['#FF7FB8','#6FC6E8','#FFA8D6'][Math.floor(Math.random()*3)];
+  const h = document.createElement('div');
+  h.className = 'falling-heart';
+  h.style.left = left + '%';
+  h.style.animationDuration = duration + 's';
+  h.dataset.gold = isGold ? '1' : '0';
+  h.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><path d="${HEART_PATH}" fill="${color}"/></svg>`;
+  h.addEventListener('animationend', ()=>{ if(h.parentNode) h.remove(); });
+  h.addEventListener('click', ()=> popHeart(h));
+  catchArea.appendChild(h);
+}
+function popHeart(h){
+  if(h.dataset.popped === '1') return;
+  h.dataset.popped = '1';
+  const gold = h.dataset.gold === '1';
+  score += gold ? 3 : 1;
+  scoreCount.textContent = score;
+  h.classList.add('pop');
+  setTimeout(()=>{ if(h.parentNode) h.remove(); }, 260);
+}
+function tickCountdown(){
+  timeLeft--; timeLeftEl.textContent = timeLeft;
+  if(timeLeft <= 0) endCatch();
+}
+function startCatch(){
+  score = 0; timeLeft = 30; catchRunning = true;
+  scoreCount.textContent = '0'; timeLeftEl.textContent = '30';
+  catchStart.classList.add('hide');
+  winCard.classList.remove('show');
+  catchArea.querySelectorAll('.falling-heart').forEach(h=> h.remove());
+  if(spawnTimer) clearInterval(spawnTimer);
+  if(countdownTimer) clearInterval(countdownTimer);
+  spawnTimer = setInterval(spawnHeart, 600);
+  countdownTimer = setInterval(tickCountdown, 1000);
+}
+function endCatch(){
+  catchRunning = false;
+  clearInterval(spawnTimer); clearInterval(countdownTimer);
+  spawnTimer = null; countdownTimer = null;
+  catchArea.querySelectorAll('.falling-heart').forEach(h=> h.remove());
+  if(score > bestScore){ bestScore = score; bestScoreEl.textContent = bestScore; }
+  let line;
+  if(score >= 25) line = `${score} points. okay show off, you clearly know us well.`;
+  else if(score >= 12) line = `${score} points. not bad, almost as quick as my replies to you.`;
+  else line = `${score} points. okay we'll work on those reflexes, try again?`;
+  winTitle.textContent = "time's up";
+  winSub.textContent = line;
+  confettiBurst();
+  setTimeout(()=> winCard.classList.add('show'), 300);
+  winReplayBtn.onclick = startCatch;
+}
+startCatchBtn.addEventListener('click', startCatch);
+
+/* ---------- game 2: teddy's memory ---------- */
+const memGrid = document.getElementById('memGrid');
+const movesCount = document.getElementById('movesCount');
+const matchedCount = document.getElementById('matchedCount');
+const memTimeEl = document.getElementById('memTime');
+
+const MEM_ICONS = [
+  {id:'paw', color:'#FF7FB8', path:'<circle cx="12" cy="15" r="6"/><circle cx="5" cy="7" r="2.6"/><circle cx="10.5" cy="4" r="2.6"/><circle cx="15.5" cy="4" r="2.6"/><circle cx="19" cy="7" r="2.6"/>'},
+  {id:'star', color:'#FFC95C', path:'<path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>'},
+  {id:'bow', color:'#4AB3DC', path:'<path d="M3 6 L11 12 L3 18 Z"/><path d="M21 6 L13 12 L21 18 Z"/><circle cx="12" cy="12" r="2.2"/>'},
+  {id:'balloon', color:'#FF5BA0', path:'<ellipse cx="12" cy="9" rx="7" ry="8"/><path d="M12 17 L10 22 L14 22 Z"/><line x1="12" y1="17" x2="12" y2="22" stroke-width="0"/>'},
+  {id:'honey', color:'#FFAE42', path:'<path d="M7 4h10v3l2 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2V9l2-2z"/><line x1="5" y1="13" x2="19" y2="13" stroke="#fff" stroke-width="1.4"/>'},
+  {id:'heart', color:'#FF5BA0', path:'<path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.8C12 5.2 13.5 4 15.5 4 19.5 4 21 8 19.5 12 17 16.5 12 21 12 21z"/>'}
+];
+
+let gMoves = 0, gMatched = 0, gFlipped = [], gLock = false, gTimer = null, gSeconds = 0, gStarted = false;
+
+function shuffleArr(arr){
+  const a = arr.slice();
+  for(let i=a.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function memFmt(s){ const m=Math.floor(s/60), r=s%60; return `${m}:${String(r).padStart(2,'0')}`; }
+
+function buildMemory(){
+  memGrid.innerHTML = '';
+  gMoves = 0; gMatched = 0; gFlipped = []; gLock = false; gSeconds = 0; gStarted = false;
+  movesCount.textContent = '0'; matchedCount.textContent = '0'; memTimeEl.textContent = '0:00';
+  winCard.classList.remove('show');
+  if(gTimer){ clearInterval(gTimer); gTimer = null; }
+
+  const deck = shuffleArr([...MEM_ICONS, ...MEM_ICONS]);
+  deck.forEach((icon, i)=>{
+    const card = document.createElement('div');
+    card.className = 'mcard'; card.dataset.id = icon.id;
+    card.style.animationDelay = (i*0.045)+'s';
+    card.innerHTML = `
+      <div class="mcard-inner">
+        <div class="mcard-face mcard-back"><svg viewBox="0 0 24 24" fill="none" stroke="#FF7FB8" stroke-width="1.6"><path d="M12 21s-7-4.5-9.5-9C1 8 2.5 4 6.5 4c2 0 3.5 1.2 4.5 2.8C12 5.2 13.5 4 15.5 4 19.5 4 21 8 19.5 12 17 16.5 12 21 12 21z"/></svg></div>
+        <div class="mcard-face mcard-front"><svg viewBox="0 0 24 24" fill="${icon.color}" stroke="${icon.color}" stroke-width="0">${icon.path}</svg></div>
+      </div>`;
+    card.addEventListener('click', ()=> flipMemCard(card));
+    memGrid.appendChild(card);
+  });
+}
+function startMemTimer(){
+  if(gStarted) return; gStarted = true;
+  gTimer = setInterval(()=>{ gSeconds++; memTimeEl.textContent = memFmt(gSeconds); }, 1000);
+}
+function flipMemCard(card){
+  if(gLock) return;
+  if(card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  startMemTimer();
+  card.classList.add('flipped');
+  gFlipped.push(card);
+  if(gFlipped.length === 2){
+    gLock = true;
+    gMoves++; movesCount.textContent = gMoves;
+    const [a,b] = gFlipped;
+    if(a.dataset.id === b.dataset.id){
+      a.classList.add('matched'); b.classList.add('matched');
+      gMatched++; matchedCount.textContent = gMatched;
+      gFlipped = []; gLock = false;
+      if(gMatched === MEM_ICONS.length){ winMemory(); }
+    } else {
+      a.classList.add('mismatch'); b.classList.add('mismatch');
+      setTimeout(()=>{
+        a.classList.remove('flipped','mismatch'); b.classList.remove('flipped','mismatch');
+        gFlipped = []; gLock = false;
+      }, 750);
+    }
+  }
+}
+function winMemory(){
+  if(gTimer){ clearInterval(gTimer); gTimer = null; }
+  let line;
+  if(gMoves <= MEM_ICONS.length+2) line = `${gMoves} moves, ${memFmt(gSeconds)}. okay show off, you clearly know us well.`;
+  else if(gMoves <= MEM_ICONS.length*2) line = `${gMoves} moves, ${memFmt(gSeconds)}. cleared it, that's basically a love language.`;
+  else line = `${gMoves} moves, ${memFmt(gSeconds)}. took a minute but you found every pair, that's what counts.`;
+  winTitle.textContent = 'all matched';
+  winSub.textContent = line;
+  confettiBurst();
+  setTimeout(()=> winCard.classList.add('show'), 300);
+  winReplayBtn.onclick = buildMemory;
+}
+
+/* ---------- game 3: dress the teddy ---------- */
+const accBtns = Array.from(document.querySelectorAll('.acc-btn'));
+function toggleAcc(name, force){
+  const layer = document.getElementById('acc-'+name);
+  const btn = document.querySelector(`.acc-btn[data-acc="${name}"]`);
+  const turnOn = force !== undefined ? force : !layer.classList.contains('on');
+  layer.classList.toggle('on', turnOn);
+  btn.classList.toggle('active', turnOn);
+}
+accBtns.forEach(b=> b.addEventListener('click', ()=> toggleAcc(b.dataset.acc)));
+
+document.getElementById('randomDressBtn').addEventListener('click', ()=>{
+  accBtns.forEach(b=> toggleAcc(b.dataset.acc, Math.random() > 0.5));
+});
+
+</script>
+</body>
+</html>
