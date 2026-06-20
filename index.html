@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>for cutu</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FF7FB8">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="for cutu">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&family=Gochi+Hand&display=swap" rel="stylesheet">
 <style>
@@ -19,6 +27,7 @@
   --ink:#5A4757;
   --text-dim:#A893A0;
   --gold:#FFC95C;
+  --lav:#B79BFF;
   --line:#FBE3EF;
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -94,6 +103,11 @@ h1,h2{font-family:'Baloo 2', sans-serif; margin:0;}
 .gcard.c1 .gcard-icon{background:linear-gradient(150deg, var(--pink-soft), #FFC7E1);}
 .gcard.c2 .gcard-icon{background:linear-gradient(150deg, var(--blue-soft), #BFE7F7);}
 .gcard.c3 .gcard-icon{background:linear-gradient(150deg, #FFF1D0, #FFE2A3);}
+.gcard.c4 .gcard-icon{background:linear-gradient(150deg, #EFE6FF, #DCCBFF);}
+.gcard.c5 .gcard-icon{background:linear-gradient(150deg, #F3E4D0, #E8C9A0);}
+.gcard.c6 .gcard-icon{background:linear-gradient(150deg, #E8F8F2, #D6F0E6);}
+.gcard.c7 .gcard-icon{background:linear-gradient(150deg, #FFE0EF, #FFC7E1);}
+.gcard.c8 .gcard-icon{background:linear-gradient(150deg, #DCF1FB, #BFE7F7);}
 
 .back-row{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
 .back-btn{background:var(--card); border:1px solid var(--line); width:36px; height:36px; border-radius:50%;
@@ -165,10 +179,71 @@ h1,h2{font-family:'Baloo 2', sans-serif; margin:0;}
 .dress-hint{text-align:center; font-size:12.5px; color:var(--text-dim); margin-bottom:6px;}
 .shuffle-row{display:flex; justify-content:center; margin-top:14px;}
 
+/* ---------- game 4: teddy says ---------- */
+.says-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:280px; margin:10px auto 18px;}
+.says-pad{aspect-ratio:1/1; border-radius:24px; cursor:pointer; transition:transform .12s ease, filter .15s ease;
+  filter:brightness(1); box-shadow:0 10px 20px -8px rgba(0,0,0,.18);}
+.says-pad:active{transform:scale(.94);}
+.says-pad.lit{filter:brightness(1.35); transform:scale(1.04);}
+.says-pad.p0{background:linear-gradient(150deg, #FFB6D9, var(--pink));}
+.says-pad.p1{background:linear-gradient(150deg, #BFE7F7, var(--blue));}
+.says-pad.p2{background:linear-gradient(150deg, #FFE8B3, var(--gold));}
+.says-pad.p3{background:linear-gradient(150deg, #E2D5FF, var(--lav));}
+.says-round{text-align:center; font-family:'Baloo 2', sans-serif; font-size:15px; margin-bottom:4px;}
+.says-overlay{position:absolute; inset:0; z-index:5; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:12px; background:rgba(255,251,248,.8); border-radius:20px;}
+.says-overlay.hide{display:none;}
+.says-stage{position:relative;}
+
+/* ---------- game 5: whack a teddy ---------- */
+.whack-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; max-width:300px; margin:6px auto 16px;}
+.hole{position:relative; aspect-ratio:1/1; border-radius:50%; background:radial-gradient(circle at 50% 35%, #E8C9A0, #C9A06B);
+  overflow:hidden; box-shadow:inset 0 6px 10px rgba(0,0,0,.25); cursor:pointer;}
+.hole-teddy{position:absolute; left:50%; bottom:-100%; transform:translateX(-50%); width:74%; transition:bottom .18s cubic-bezier(.34,1.56,.64,1);}
+.hole.up .hole-teddy{bottom:-6%;}
+.hole.bonked .hole-teddy{transition:none; bottom:-100%;}
+
+/* ---------- game 6: bubble pop ---------- */
+.bubble-grid{display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; max-width:320px; margin:6px auto 16px;}
+.bubble{aspect-ratio:1/1; border-radius:50%; cursor:pointer; transition:transform .15s ease, opacity .2s ease;
+  box-shadow:inset 0 -4px 6px rgba(255,255,255,.5), inset 0 4px 6px rgba(0,0,0,.06), 0 4px 8px rgba(0,0,0,.08);}
+.bubble.popped{transform:scale(0); opacity:0; pointer-events:none;}
+.bubble:active{transform:scale(.85);}
+.pop-tally{text-align:center; font-size:12.5px; color:var(--text-dim); margin-bottom:10px;}
+
 @media (max-width:380px){
   .hub-title{font-size:21px;} .mascot-wrap svg{width:115px;}
   .teddy-stage{width:190px; height:210px;}
+  .says-grid{max-width:240px;} .whack-grid{max-width:260px;} .bubble-grid{max-width:280px;}
 }
+
+/* ---------- game 7: love notes jar ---------- */
+.jar-stage{display:flex; flex-direction:column; align-items:center; gap:14px; margin:10px 0 8px;}
+.jar-svg{width:150px; cursor:pointer; transition:transform .15s ease; animation:jarbob 3.2s ease-in-out infinite;}
+.jar-svg:active{transform:scale(.93);}
+@keyframes jarbob{0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);}}
+.jar-hint{font-size:13px; color:var(--text-dim); text-align:center; max-width:240px; margin:0;}
+.note-pop{background:#fff; border-radius:18px; padding:20px 22px; max-width:280px; min-height:64px; text-align:center;
+  font-family:'Gochi Hand', cursive; font-size:18px; color:var(--ink); box-shadow:0 14px 28px -12px rgba(0,0,0,.18);
+  border:1px solid var(--line); opacity:0; transform:translateY(10px) scale(.95);
+  transition:opacity .35s ease, transform .35s ease; display:flex; align-items:center; justify-content:center;}
+.note-pop.show{opacity:1; transform:translateY(0) scale(1);}
+.jar-progress{font-size:12px; color:var(--text-dim); margin-top:2px;}
+
+/* ---------- game 8: grow our garden ---------- */
+.garden-stage{display:flex; flex-direction:column; align-items:center; gap:8px; margin:6px 0 6px;}
+.plant-wrap{position:relative; width:160px; height:200px;}
+.plant-svg{position:absolute; inset:0; opacity:0; transform:scale(.92); transition:opacity .3s ease, transform .25s ease;}
+.plant-svg.show{opacity:1; transform:scale(1);}
+.stage-label{font-family:'Baloo 2', sans-serif; font-size:14.5px; text-transform:capitalize; margin:2px 0 6px;}
+.garden-dots{display:flex; gap:7px; margin-bottom:14px;}
+.garden-dot{width:9px; height:9px; border-radius:50%; background:var(--line); transition:background .25s;}
+.garden-dot.on{background:var(--blue-deep);}
+.bloom-message{background:#fff; border-radius:18px; padding:18px 20px; max-width:280px; text-align:center;
+  font-family:'Gochi Hand', cursive; font-size:17px; color:var(--ink); box-shadow:0 14px 28px -12px rgba(0,0,0,.18);
+  border:1px solid var(--line); opacity:0; transform:translateY(10px); transition:opacity .4s, transform .4s; margin:10px 0;}
+.bloom-message.show{opacity:1; transform:translateY(0);}
+.garden-btn-row{display:flex; justify-content:center; gap:10px; margin-top:6px;}
 </style>
 </head>
 <body>
@@ -219,6 +294,31 @@ h1,h2{font-family:'Baloo 2', sans-serif; margin:0;}
       <div class="gcard c3" data-game="dress">
         <div class="gcard-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="#FFC95C"/><circle cx="15" cy="8" r="3" fill="#FFC95C"/><circle cx="12" cy="14" r="7" fill="#FFC95C"/></svg></div>
         <div class="gcard-text"><b>dress the teddy</b><span>hats, bows, and questionable fashion choices</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c4" data-game="says">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2" fill="#FF7FB8"/><rect x="13" y="4" width="7" height="7" rx="2" fill="#6FC6E8"/><rect x="4" y="13" width="7" height="7" rx="2" fill="#FFC95C"/><rect x="13" y="13" width="7" height="7" rx="2" fill="#B79BFF"/></svg></div>
+        <div class="gcard-text"><b>teddy says</b><span>watch the pattern, repeat it back, don't mess up</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c5" data-game="whack">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#C9A06B" stroke-width="2"/><circle cx="12" cy="10" r="3.4" fill="#D9A06B"/></svg></div>
+        <div class="gcard-text"><b>whack a teddy</b><span>quick taps, they don't stay up for long</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c6" data-game="bubble">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="4" fill="#FFB6D9"/><circle cx="16" cy="8" r="3" fill="#BFE7F7"/><circle cx="13" cy="16" r="3.5" fill="#FFE8B3"/></svg></div>
+        <div class="gcard-text"><b>bubble pop</b><span>zero point to this one, just satisfying</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c7" data-game="jar">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><rect x="6" y="8" width="12" height="13" rx="3" fill="none" stroke="#FF7FB8" stroke-width="1.8"/><rect x="8" y="5" width="8" height="4" rx="1.5" fill="#FF7FB8"/><path d="M12 21s-3-2-3-4.5C9 14.5 12 14 12 14s3 .5 3 2.5c0 2.5-3 4.5-3 4.5z" fill="#FF5BA0"/></svg></div>
+        <div class="gcard-text"><b>love notes jar</b><span>pull a little note out, collect them all</span></div>
+        <div class="gcard-arrow">›</div>
+      </div>
+      <div class="gcard c8" data-game="garden">
+        <div class="gcard-icon"><svg viewBox="0 0 24 24"><path d="M12 21V11" stroke="#4AB3DC" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="5" fill="#FF7FB8"/></svg></div>
+        <div class="gcard-text"><b>grow our garden</b><span>water it till it blooms, no rush</span></div>
         <div class="gcard-arrow">›</div>
       </div>
     </div>
@@ -314,6 +414,124 @@ h1,h2{font-family:'Baloo 2', sans-serif; margin:0;}
     <div class="shuffle-row"><button class="cute-btn alt" id="randomDressBtn">surprise me</button></div>
   </div>
 
+  <!-- ===================== GAME: TEDDY SAYS ===================== -->
+  <div class="screen" id="screen-says">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>teddy says</h2></div>
+    <p class="says-round" id="saysRound">round 0</p>
+    <div class="says-stage">
+      <div class="says-grid" id="saysGrid">
+        <div class="says-pad p0" data-pad="0"></div>
+        <div class="says-pad p1" data-pad="1"></div>
+        <div class="says-pad p2" data-pad="2"></div>
+        <div class="says-pad p3" data-pad="3"></div>
+      </div>
+      <div class="says-overlay" id="saysOverlay">
+        <p style="font-family:'Gochi Hand', cursive; font-size:22px; color:var(--pink-deep); margin:0;">ready?</p>
+        <p style="font-size:13px; color:var(--text-dim); max-width:200px; text-align:center; margin:0;">watch the pattern, then tap it back in order</p>
+        <button class="cute-btn" id="startSaysBtn">start</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== GAME: WHACK A TEDDY ===================== -->
+  <div class="screen" id="screen-whack">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>whack a teddy</h2></div>
+    <div class="stat-row">
+      <div>score <b id="whackScore">0</b></div>
+      <div>time <b id="whackTime">30</b>s</div>
+      <div>best <b id="whackBest">0</b></div>
+    </div>
+    <div style="position:relative;">
+      <div class="whack-grid" id="whackGrid"></div>
+      <div class="catch-start" id="whackStart" style="position:absolute; inset:0; border-radius:20px;">
+        <p style="font-family:'Gochi Hand', cursive; font-size:22px; color:var(--pink-deep); margin:0;">ready?</p>
+        <p>30 seconds, tap the teddies before they duck back down</p>
+        <button class="cute-btn" id="startWhackBtn">start</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== GAME: BUBBLE POP ===================== -->
+  <div class="screen" id="screen-bubble">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>bubble pop</h2></div>
+    <p class="pop-tally">popped this round: <b id="bubbleCount">0</b>, total: <b id="bubbleTotal">0</b></p>
+    <div class="bubble-grid" id="bubbleGrid"></div>
+  </div>
+
+  <!-- ===================== GAME: LOVE NOTES JAR ===================== -->
+  <div class="screen" id="screen-jar">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>love notes jar</h2></div>
+    <div class="jar-stage">
+      <svg class="jar-svg" id="jarSvg" viewBox="0 0 140 160">
+        <rect x="35" y="50" width="70" height="95" rx="14" fill="none" stroke="#FF7FB8" stroke-width="4"/>
+        <rect x="45" y="32" width="50" height="22" rx="7" fill="#FF7FB8"/>
+        <rect x="40" y="26" width="60" height="10" rx="4" fill="#FF5BA0"/>
+        <path d="M70 120s-16-10-16-22c0-9 8-13 16-13s16 4 16 13c0 12-16 22-16 22z" fill="#FFB6D9"/>
+        <path d="M55 95s-8-5-8-11c0-4.5 4-6.5 8-6.5s8 2 8 6.5c0 6-8 11-8 11z" fill="#FFD6EC"/>
+        <path d="M90 100s-7-4.5-7-10c0-4 3.5-6 7-6s7 2 7 6c0 5.5-7 10-7 10z" fill="#FFD6EC"/>
+      </svg>
+      <p class="jar-hint">tap the jar to pull out a little note</p>
+      <p class="note-pop" id="notePop">your note will show up here</p>
+      <p class="jar-progress" id="jarProgress">found 0 of 16</p>
+    </div>
+  </div>
+
+  <!-- ===================== GAME: GROW OUR GARDEN ===================== -->
+  <div class="screen" id="screen-garden">
+    <div class="back-row"><button class="back-btn" data-back="1">‹</button><h2>grow our garden</h2></div>
+    <div class="garden-stage">
+      <p class="stage-label" id="stageLabel">seed</p>
+      <div class="plant-wrap">
+        <svg class="plant-svg show" viewBox="0 0 160 200">
+          <path d="M55 170 L105 170 L98 195 L62 195 Z" fill="#FF7FB8"/>
+          <rect x="50" y="162" width="60" height="12" rx="4" fill="#FF5BA0"/>
+          <ellipse cx="80" cy="168" rx="32" ry="7" fill="#8B5A33"/>
+          <circle cx="80" cy="163" r="4" fill="#5A4131"/>
+        </svg>
+        <svg class="plant-svg" viewBox="0 0 160 200">
+          <path d="M55 170 L105 170 L98 195 L62 195 Z" fill="#FF7FB8"/>
+          <rect x="50" y="162" width="60" height="12" rx="4" fill="#FF5BA0"/>
+          <ellipse cx="80" cy="168" rx="32" ry="7" fill="#8B5A33"/>
+          <line x1="80" y1="168" x2="80" y2="138" stroke="#6FAE6E" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="68" cy="146" rx="11" ry="6" fill="#7BC47F" transform="rotate(-20 68 146)"/>
+          <ellipse cx="92" cy="146" rx="11" ry="6" fill="#7BC47F" transform="rotate(20 92 146)"/>
+        </svg>
+        <svg class="plant-svg" viewBox="0 0 160 200">
+          <path d="M55 170 L105 170 L98 195 L62 195 Z" fill="#FF7FB8"/>
+          <rect x="50" y="162" width="60" height="12" rx="4" fill="#FF5BA0"/>
+          <ellipse cx="80" cy="168" rx="32" ry="7" fill="#8B5A33"/>
+          <line x1="80" y1="168" x2="80" y2="105" stroke="#6FAE6E" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="64" cy="140" rx="14" ry="7" fill="#7BC47F" transform="rotate(-22 64 140)"/>
+          <ellipse cx="96" cy="140" rx="14" ry="7" fill="#7BC47F" transform="rotate(22 96 140)"/>
+          <ellipse cx="80" cy="100" rx="13" ry="16" fill="#FFB6D9"/>
+        </svg>
+        <svg class="plant-svg" viewBox="0 0 160 200">
+          <path d="M55 170 L105 170 L98 195 L62 195 Z" fill="#FF7FB8"/>
+          <rect x="50" y="162" width="60" height="12" rx="4" fill="#FF5BA0"/>
+          <ellipse cx="80" cy="168" rx="32" ry="7" fill="#8B5A33"/>
+          <line x1="80" y1="168" x2="80" y2="95" stroke="#6FAE6E" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="62" cy="138" rx="15" ry="7.5" fill="#7BC47F" transform="rotate(-22 62 138)"/>
+          <ellipse cx="98" cy="138" rx="15" ry="7.5" fill="#7BC47F" transform="rotate(22 98 138)"/>
+          <ellipse cx="80" cy="78" rx="13" ry="18" fill="#FF8FC4"/>
+          <ellipse cx="80" cy="58" rx="13" ry="18" fill="#FF8FC4"/>
+          <ellipse cx="61" cy="86" rx="18" ry="13" fill="#FF8FC4" transform="rotate(-30 61 86)"/>
+          <ellipse cx="99" cy="86" rx="18" ry="13" fill="#FF8FC4" transform="rotate(30 99 86)"/>
+          <ellipse cx="61" cy="60" rx="18" ry="13" fill="#FF8FC4" transform="rotate(30 61 60)"/>
+          <ellipse cx="99" cy="60" rx="18" ry="13" fill="#FF8FC4" transform="rotate(-30 99 60)"/>
+          <circle cx="80" cy="78" r="11" fill="#FFC95C"/>
+        </svg>
+      </div>
+      <div class="garden-dots" id="gardenDots">
+        <div class="garden-dot on"></div><div class="garden-dot"></div><div class="garden-dot"></div><div class="garden-dot"></div>
+      </div>
+      <p class="bloom-message" id="bloomMessage">just like this flower, give it time, it always blooms. see you on the 22nd 🌸</p>
+      <div class="garden-btn-row">
+        <button class="cute-btn" id="waterBtn">water it 💧</button>
+        <button class="cute-btn alt" id="plantAgainBtn" style="display:none;">plant again</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="win-card" id="winCard">
@@ -387,6 +605,11 @@ const screens = {
   catch: document.getElementById('screen-catch'),
   memory: document.getElementById('screen-memory'),
   dress: document.getElementById('screen-dress'),
+  says: document.getElementById('screen-says'),
+  whack: document.getElementById('screen-whack'),
+  bubble: document.getElementById('screen-bubble'),
+  jar: document.getElementById('screen-jar'),
+  garden: document.getElementById('screen-garden'),
 };
 function goScreen(name){
   Object.values(screens).forEach(s=> s.classList.remove('active'));
@@ -397,6 +620,10 @@ document.querySelectorAll('.gcard').forEach(c=>{
   c.addEventListener('click', ()=>{
     goScreen(c.dataset.game);
     if(c.dataset.game === 'memory') buildMemory();
+    if(c.dataset.game === 'says') resetSays();
+    if(c.dataset.game === 'whack') resetWhack();
+    if(c.dataset.game === 'bubble') buildBubbles();
+    if(c.dataset.game === 'jar') resetJarView();
   });
 });
 document.querySelectorAll('[data-back]').forEach(b=>{
@@ -578,6 +805,288 @@ document.getElementById('randomDressBtn').addEventListener('click', ()=>{
   accBtns.forEach(b=> toggleAcc(b.dataset.acc, Math.random() > 0.5));
 });
 
+/* ---------- game 4: teddy says ---------- */
+const saysOverlay = document.getElementById('saysOverlay');
+const startSaysBtn = document.getElementById('startSaysBtn');
+const saysRoundEl = document.getElementById('saysRound');
+const saysPads = Array.from(document.querySelectorAll('.says-pad'));
+let saysSequence = [], saysStep = 0, saysRoundNum = 0, saysBusy = false;
+
+function litPad(idx){
+  const pad = saysPads[idx];
+  pad.classList.add('lit');
+  setTimeout(()=> pad.classList.remove('lit'), 340);
+}
+function playSaysSequence(){
+  saysBusy = true;
+  let i = 0;
+  function step(){
+    if(i >= saysSequence.length){ saysBusy = false; return; }
+    litPad(saysSequence[i]);
+    i++;
+    setTimeout(step, 560);
+  }
+  setTimeout(step, 500);
+}
+function nextSaysRound(){
+  saysRoundNum++;
+  saysRoundEl.textContent = 'round ' + saysRoundNum;
+  saysSequence.push(Math.floor(Math.random()*4));
+  saysStep = 0;
+  playSaysSequence();
+}
+function resetSays(){
+  saysSequence = []; saysStep = 0; saysRoundNum = 0; saysBusy = false;
+  saysRoundEl.textContent = 'round 0';
+  saysOverlay.classList.remove('hide');
+}
+function startSays(){
+  saysOverlay.classList.add('hide');
+  winCard.classList.remove('show');
+  saysSequence = []; saysRoundNum = 0;
+  nextSaysRound();
+}
+function endSays(){
+  winTitle.textContent = 'teddy says... oops';
+  winSub.textContent = `made it to round ${saysRoundNum}. respectable. tap play again to beat it.`;
+  confettiBurst();
+  setTimeout(()=> winCard.classList.add('show'), 250);
+  winReplayBtn.onclick = startSays;
+}
+saysPads.forEach(pad=>{
+  pad.addEventListener('click', ()=>{
+    if(saysBusy) return;
+    const idx = Number(pad.dataset.pad);
+    litPad(idx);
+    if(saysSequence[saysStep] === idx){
+      saysStep++;
+      if(saysStep === saysSequence.length){ setTimeout(nextSaysRound, 700); }
+    } else {
+      endSays();
+    }
+  });
+});
+startSaysBtn.addEventListener('click', startSays);
+
+/* ---------- game 5: whack a teddy ---------- */
+const whackGrid = document.getElementById('whackGrid');
+const whackStart = document.getElementById('whackStart');
+const startWhackBtn = document.getElementById('startWhackBtn');
+const whackScoreEl = document.getElementById('whackScore');
+const whackTimeEl = document.getElementById('whackTime');
+const whackBestEl = document.getElementById('whackBest');
+
+const TEDDY_HEAD_SVG = `<svg viewBox="0 0 100 100">
+  <circle cx="28" cy="22" r="14" fill="#D9A06B"/><circle cx="72" cy="22" r="14" fill="#D9A06B"/>
+  <circle cx="28" cy="22" r="7" fill="#8B5A33"/><circle cx="72" cy="22" r="7" fill="#8B5A33"/>
+  <circle cx="50" cy="50" r="38" fill="#D9A06B"/><ellipse cx="50" cy="60" rx="16" ry="13" fill="#F3D9B8"/>
+  <circle cx="38" cy="44" r="4" fill="#5A4757"/><circle cx="62" cy="44" r="4" fill="#5A4757"/>
+  <ellipse cx="50" cy="58" rx="5" ry="4" fill="#5A4757"/>
+  <path d="M50 62 Q50 68 44 69" stroke="#5A4757" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M50 62 Q50 68 56 69" stroke="#5A4757" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>`;
+
+let whackScore = 0, whackBestVal = 0, whackRunning = false, whackSpawnTimer = null, whackCountdownTimer = null, whackTimeLeft = 30;
+let whackHoles = [];
+
+function buildWhackHoles(){
+  whackGrid.innerHTML = '';
+  whackHoles = [];
+  for(let i=0;i<9;i++){
+    const hole = document.createElement('div');
+    hole.className = 'hole';
+    hole.innerHTML = `<div class="hole-teddy">${TEDDY_HEAD_SVG}</div>`;
+    hole.dataset.tapped = '0';
+    hole.addEventListener('click', ()=> whackTap(hole));
+    whackGrid.appendChild(hole);
+    whackHoles.push(hole);
+  }
+}
+function whackTap(hole){
+  if(!whackRunning) return;
+  if(hole.classList.contains('up') && hole.dataset.tapped === '0'){
+    hole.dataset.tapped = '1';
+    whackScore++; whackScoreEl.textContent = whackScore;
+    hole.classList.add('bonked');
+    hole.classList.remove('up');
+    setTimeout(()=> hole.classList.remove('bonked'), 200);
+  }
+}
+function spawnWhack(){
+  if(!whackRunning) return;
+  const free = whackHoles.filter(h=> !h.classList.contains('up'));
+  if(free.length === 0) return;
+  const hole = free[Math.floor(Math.random()*free.length)];
+  hole.dataset.tapped = '0';
+  hole.classList.add('up');
+  const dur = 600 + Math.random()*450;
+  setTimeout(()=>{ hole.classList.remove('up'); }, dur);
+}
+function tickWhack(){
+  whackTimeLeft--; whackTimeEl.textContent = whackTimeLeft;
+  if(whackTimeLeft <= 0) endWhack();
+}
+function resetWhack(){
+  if(whackHoles.length === 0) buildWhackHoles();
+  whackRunning = false;
+  if(whackSpawnTimer) clearInterval(whackSpawnTimer);
+  if(whackCountdownTimer) clearInterval(whackCountdownTimer);
+  whackHoles.forEach(h=>{ h.classList.remove('up','bonked'); h.dataset.tapped='0'; });
+  whackScore = 0; whackTimeLeft = 30;
+  whackScoreEl.textContent = '0'; whackTimeEl.textContent = '30';
+  whackStart.style.display = 'flex';
+  winCard.classList.remove('show');
+}
+function startWhack(){
+  whackScore = 0; whackTimeLeft = 30; whackRunning = true;
+  whackScoreEl.textContent = '0'; whackTimeEl.textContent = '30';
+  whackStart.style.display = 'none';
+  winCard.classList.remove('show');
+  whackHoles.forEach(h=>{ h.classList.remove('up','bonked'); h.dataset.tapped='0'; });
+  if(whackSpawnTimer) clearInterval(whackSpawnTimer);
+  if(whackCountdownTimer) clearInterval(whackCountdownTimer);
+  whackSpawnTimer = setInterval(spawnWhack, 700);
+  whackCountdownTimer = setInterval(tickWhack, 1000);
+}
+function endWhack(){
+  whackRunning = false;
+  clearInterval(whackSpawnTimer); clearInterval(whackCountdownTimer);
+  whackSpawnTimer = null; whackCountdownTimer = null;
+  whackHoles.forEach(h=> h.classList.remove('up'));
+  if(whackScore > whackBestVal){ whackBestVal = whackScore; whackBestEl.textContent = whackBestVal; }
+  let line;
+  if(whackScore >= 18) line = `${whackScore} whacks. okay show off, you clearly know us well.`;
+  else if(whackScore >= 9) line = `${whackScore} whacks. not bad, almost as quick as my replies to you.`;
+  else line = `${whackScore} whacks. okay we'll work on those reflexes, try again?`;
+  winTitle.textContent = "time's up";
+  winSub.textContent = line;
+  confettiBurst();
+  setTimeout(()=> winCard.classList.add('show'), 300);
+  winReplayBtn.onclick = startWhack;
+}
+startWhackBtn.addEventListener('click', startWhack);
+
+/* ---------- game 6: bubble pop ---------- */
+const bubbleGrid = document.getElementById('bubbleGrid');
+const bubbleCountEl = document.getElementById('bubbleCount');
+const bubbleTotalEl = document.getElementById('bubbleTotal');
+let bubbleTotal = 0;
+
+function buildBubbles(){
+  bubbleGrid.innerHTML = '';
+  bubbleCountEl.textContent = '0';
+  const colors = ['#FFB6D9','#BFE7F7','#FFE8B3','#E2D5FF','#C7F0DD'];
+  let popped = 0;
+  const total = 30;
+  for(let i=0;i<total;i++){
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.style.background = `radial-gradient(circle at 35% 30%, #fff, ${colors[Math.floor(Math.random()*colors.length)]})`;
+    b.addEventListener('click', ()=>{
+      if(b.classList.contains('popped')) return;
+      b.classList.add('popped');
+      popped++;
+      bubbleCountEl.textContent = popped;
+      bubbleTotal++; bubbleTotalEl.textContent = bubbleTotal;
+      if(popped === total){
+        confettiBurst();
+        setTimeout(buildBubbles, 700);
+      }
+    });
+    bubbleGrid.appendChild(b);
+  }
+}
+
+/* ---------- game 7: love notes jar ---------- */
+const jarSvg = document.getElementById('jarSvg');
+const notePop = document.getElementById('notePop');
+const jarProgress = document.getElementById('jarProgress');
+const JAR_NOTES = [
+  "you make ordinary days feel like the good part",
+  "i think about you more than i'll ever admit out loud",
+  "your laugh is my favorite sound, hands down",
+  "i'm proud of you today, just generally, always",
+  "you're the softest place i know",
+  "thank you for picking me, every single time",
+  "i like who i am when i'm around you",
+  "you're worth every mile of this distance",
+  "your hugs fix things words can't",
+  "i'd choose you on purpose, every time, no hesitation",
+  "you're my favorite notification, no contest",
+  "being loved by you feels like winning quietly",
+  "i save the good news for you first, always",
+  "you make hard days feel survivable",
+  "i'm so lucky it's a little annoying honestly",
+  "this jar has sixteen notes, you're still my favorite one"
+];
+let jarSeen = new Set();
+function resetJarView(){
+  notePop.classList.remove('show');
+  notePop.textContent = 'your note will show up here';
+  jarProgress.textContent = `found ${jarSeen.size} of ${JAR_NOTES.length}`;
+}
+function pullNote(){
+  const idx = Math.floor(Math.random()*JAR_NOTES.length);
+  jarSeen.add(idx);
+  notePop.classList.remove('show');
+  notePop.textContent = JAR_NOTES[idx];
+  requestAnimationFrame(()=> requestAnimationFrame(()=> notePop.classList.add('show')));
+  jarProgress.textContent = `found ${jarSeen.size} of ${JAR_NOTES.length}`;
+  if(jarSeen.size === JAR_NOTES.length){ confettiBurst(); }
+}
+jarSvg.addEventListener('click', pullNote);
+
+/* ---------- game 8: grow our garden ---------- */
+const plantSvgs = Array.from(document.querySelectorAll('.plant-svg'));
+const stageLabel = document.getElementById('stageLabel');
+const gardenDots = Array.from(document.querySelectorAll('.garden-dot'));
+const bloomMessage = document.getElementById('bloomMessage');
+const waterBtn = document.getElementById('waterBtn');
+const plantAgainBtn = document.getElementById('plantAgainBtn');
+const STAGE_NAMES = ['seed','sprout','budding','full bloom'];
+const NEEDED_PER_STAGE = 3;
+let waterCount = 0, stageIdx = 0;
+
+function updatePlantDisplay(){
+  plantSvgs.forEach((el,i)=> el.classList.toggle('show', i===stageIdx));
+  stageLabel.textContent = STAGE_NAMES[stageIdx];
+  gardenDots.forEach((d,i)=> d.classList.toggle('on', i<=stageIdx));
+}
+function waterPlant(){
+  if(stageIdx >= 3) return;
+  waterCount++;
+  const cur = plantSvgs[stageIdx];
+  cur.style.transform = 'scale(1.07)';
+  setTimeout(()=>{ cur.style.transform = ''; }, 150);
+  if(waterCount % NEEDED_PER_STAGE === 0){
+    stageIdx++;
+    updatePlantDisplay();
+    if(stageIdx === 3){
+      confettiBurst();
+      bloomMessage.classList.add('show');
+      waterBtn.style.display = 'none';
+      plantAgainBtn.style.display = 'inline-block';
+    }
+  }
+}
+function resetGarden(){
+  waterCount = 0; stageIdx = 0;
+  updatePlantDisplay();
+  bloomMessage.classList.remove('show');
+  waterBtn.style.display = 'inline-block';
+  plantAgainBtn.style.display = 'none';
+}
+waterBtn.addEventListener('click', waterPlant);
+plantAgainBtn.addEventListener('click', resetGarden);
+updatePlantDisplay();
+
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
 </script>
 </body>
 </html>
